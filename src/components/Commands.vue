@@ -3,7 +3,7 @@
     <select name="speeds" id="speeds">
             <option v-for="speed in speeds" :key="speed.id">{{ speed }}</option>
     </select>
-    <v-btn round color="yellow" class="black--text">Jouer</v-btn>
+    <v-btn round color="yellow" class="black--text" v-on:click="getPlayerChoice">Jouer</v-btn>
 </div>
     
 </template>
@@ -16,11 +16,23 @@ export default {
     data(){
         return {
             speeds: [ 1, 2, 3, 4, 5 ],
+            playerProgress: 0,
+            choice: 1
    
         }
     },
 
     methods: {
+        getPlayerChoice(){
+            this.choice = document.querySelector('#speeds').value
+            return this.setPlayerProgression()
+        },
+        setPlayerProgression(choice){
+            this.playerProgress = Math.floor(Math.random() * this.choice * 100)
+            this.playerNewBug = Math.floor(Math.random() * this.choice * 10)
+            console.log('COMMANDS', this.choice, this.playerProgress, this.playerNewBug)
+            this.$emit('youprog', this.playerProgress, this.playerNewBug)
+        },
        
         
     },

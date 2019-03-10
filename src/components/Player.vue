@@ -9,14 +9,19 @@
         <IEcharts :option="bugs" style="width: 300px; height: 250px;"></IEcharts> -->
         <v-card>
             <v-card-text light>
-                <span>Progression : <strong></strong></span>
-                <span>Nouveaux bugs : <strong></strong></span>
+                <span>Votre score : <strong>{{ playerScore }}</strong></span>
+                <span>Vos bugs : <strong>{{ playerBug }}</strong></span>
+            </v-card-text>
+        </v-card><v-card>
+            <v-card-text light>
+                <span>Progression : <strong>{{ playerProgress }}</strong></span>
+                <span>Nouveaux bugs : <strong>{{ playerNewBug }}</strong></span>
             </v-card-text>
         </v-card>
 
-        <commands style="margin-bottom: 25px;">Vous choisissez la vitesse de production de votre code, 
+        <commands style="margin-bottom: 25px;" v-on:youprog="setPlayerScore">Vous choisissez la vitesse de production de votre code, 
         mais attention : plus vous codez vite, plus le risque de produire des bugs augmente...</commands>
-        <debug style="margin-left: 30px;">Si vos bugs montent à plus de 100, ils seront décomptés de votre score. 
+        <debug style="margin-left: 30px;" v-on:clearbug="setPlayerDebug">Si vos bugs montent à plus de 100, ils seront décomptés de votre score. 
         Vous pouvez les éliminer en cliquant ici, mais attention ! Vous passez votre tour...</debug>
 
     </div>  
@@ -37,105 +42,57 @@ export default {
     
     data(){
         return {
-            /*
-            gauge: {
-                itemStyle: {
-                    color: '#FFCC00'
-                },
-                
-                series: [
-                {
-                    name: 'Code',
-                    type: 'gauge',
-                    radius: '100%',
-                    itemStyle: {
-
-                        color: '#AAAA55',
-                    },
-                    splitNumber: 10,
-                    min: 0,
-                    max: 1000,
-
-                    detail: {
-                        show: true,
-                        itemStyle: {
-                            color: '#FFCC00'
-                        },
-                        formatter: '{value}'},
-                    data: [{
-                    value: 0,
-                    itemStyle: {
-                        color: '#FFCC00'
-                    },
-                    name: 'player'
-                    }
-                    ]
-                }
-                ]
-            },
-            
-                 bugs:{
-                     series: [                       
-                         {
-                             type: 'gauge',
-                             center: [ '63%', '30%' ],
-                             radius: '100%',
-                             min: 0,
-                             max: 100,
-                             startAngle: 225,
-                             endAngle: 315,
-                             clockwise: false,
-                             splitNumber: 10,
-                             axisLine: {
-                                 lineStyle: {
-                                     width: 10
-                                 }
-                             },
-                             axisTick: {
-                                 show: false
-                             },
-                             axisLabel: {
-                                 formatter: function(v){
-                                     switch(v + ''){
-                                         case '0': return '0';
-                                         case '1': return '50';
-                                         case '2': return '100';
-                                     }
-                                 }
-                             },
-                             splitLine: {
-                                 length: 10,
-                                 lineStyle: {
-                                     color: 'white'
-                                 }
-                             },
-                             pointer: {
-                                 width: 8
-                            },
-                            title: {
-                                show: true,
-                                color: 'red',
-                                bottom: '60%'
-                            },
-                            data: [
-                                {
-                                    value: 0,
-                                    name: 'Bugs'
-                                }
-                            ]
-                         }
-                     ]
-                 }  */
+            playerScore: 0,
+            playerBug: 0,
+            playerProgress: 0,
+            playerNewBug: 0
         } 
         
     },
     computed: {
-
+        
     },
     watch: {
+        playerBug(){
+            if (this.playerBug > 100) return this.sanctionPlayer()
+        },
+        
+        playerScore(){
+            if (this.playerScore > 1000) this.$emit('gameover')
+        }
         
     },
     methods:{
+        setPlayerScore(playerProgress, playerNewBug){
+            this.playerScore = this.playerScore + playerProgress
+            this.playerProgress = playerProgress
+            this.playerBug = this.playerBug + playerNewBug
+            this.playerNewBug = playerNewBug
+            console.log('PLAYER updated', this.playerScore, this.playerBug)
+            this.$emit('playerTurn', this.playerProgress, this.playerNewBug)
+            console.log('PLAYER emits playerTurn', this.playerProgress, this.playerNewBug)
+            //, this.playerNewBug
+            //this.saveForDisplay()
+        },
+        saveForDisplay(){
+            this.playerProgress = playerProgress
+            this.playerNewBug = playerNewBug
+            console.log('PLAYER - values progress & newBug for display', this.playerProgress, this.playerNewBug)
+        },
+        setPlayerDebug(){
+            this.playerScore = this.playerScore + this.playerBug
+            this.playerBug = 0
+            this.playerProgress = this.playerBug
+            this.playerBug = 0
+            console.log('PLAYER debugging', this.playerScore)
+            this.$emit('playerTurn')
+        },
+        sanctionPlayer() {
+            this.playerScore = this.playerScore - (this.playerBug * 2)
+            this.playerProgress = 0
+            this.playerNewBug = 0
+            this.$emit('playerTurn')
+        }
         
      
     },
@@ -147,4 +104,11 @@ export default {
     
 }
 </script>
+
+<style>
+    strong {
+        color: yellow;
+    }
+</style>
+
 
