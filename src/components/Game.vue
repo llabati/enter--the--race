@@ -43,6 +43,9 @@ export default {
     data(){
         return {
             launchAI: false,
+            playerUpScore: 0,
+            playerUpBug: 0,
+            AIUpScore: 0,
             playerProg: 0,
             playerNewBugs: 0,
             AIProgress: 0,
@@ -51,19 +54,27 @@ export default {
         }
     },
     watch: {
-        
+        playerUpScore(){
+            if (this.playerUpScore > 1000) return this.closeGame()
+        },
+        AIUpScore(){
+            if (this.AIUpScore > 1000) return this.closeGame()
+        }
     },
     
     methods: {
-        upToAI(playerProgress, playerNewBug){
+        upToAI(playerProgress, playerNewBug, playerScore, playerBug){
             console.log('GAME - playerProgress', playerProgress, playerNewBug)
             this.playerProg = playerProgress
             this.playerNewBugs = playerNewBug
+            this.playerUpScore = playerScore
+            this.playerUpBug = playerBug
             this.launchAI = !this.launchAI
         },
-        saveTurn(AIProgress){
+        saveTurn(AIProgress, AIScore){
             console.log('GAME - saveTurn', AIProgress, this.playerProg, this.playerNewBugs)
             this.AIProgress = AIProgress
+            this.AIUpScore = AIScore
             this.turn.AIProgress = this.AIProgress
             //this.playerProgress = playerProgress
             this.turn.playerProgress = this.playerProg
@@ -71,10 +82,13 @@ export default {
             this.turn.playerNewBug = this.playerNewBugs
             this.game.push(this.turn)
         },
-        closeGame(bool){
+        closeGame(){
             this.$store.commit('addToGames', this.game)
-            this.$router.push('/end', { winner: bool })
-            return this.reset()
+            this.$store.commit('addPlayerScore', this.playerUpScore)
+            this.$store.commit('addAIScore', this.AIUpScore)
+            console.log('GAME - addScores', this.playerUpScore, this.AIUpScore)
+            this.$router.push('/end')
+            //return this.reset()
         },
         // récupérer les résultats playerScore et AIScore
         // gérer 'Endgame' avec le booléen et le computed (?????) 'victory'

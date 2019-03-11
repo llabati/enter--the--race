@@ -19,8 +19,7 @@ export default new Router({
     {
       path: '/end',
       name: 'EndGame',
-      component: EndGame,
-
+      component: EndGame
     },
     
     {

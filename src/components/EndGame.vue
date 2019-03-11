@@ -6,7 +6,7 @@
                 <v-card>
                     <v-card-title primary title>
                         <div class="display-1 text-sm-center text-xl-center yellow--text">
-                            Avec points sur , </div>
+                            {{ claimVictory() }} avec {{ winner }} points sur {{ total }} </div>
                     </v-card-title>
                 </v-card>
                 <v-toolbar flat>
@@ -58,13 +58,34 @@ export default {
     store,
     data(){
         return {
+            victory: '',
+            
         }
     },
     computed: {
+        playerGameScore(){
+            return this.$store.getters.getPlayerFinalScore
+        },
+        AIGameScore(){
+            return this.$store.getters.getAIFinalScore
+        },
+        winner(){
+            return Math.max(this.playerGameScore, this.AIGameScore)
+        },
+        total(){
+            return this.playerGameScore + this.AIGameScore
+        }
         
     },
     methods: {
-        
+        claimVictory(){
+            
+            if (this.playerGameScore > this.AIGameScore){
+                return this.victory = 'Vous avez gagné '
+            } else {
+                return this.victory = "C'est la machine qui a gagné "
+            }
+        }
     }
     
 }

@@ -53,7 +53,7 @@ export default {
             this.AIProgress = Math.floor(Math.random() * 250)
             console.log('AI', this.AIProgress)
             this.AIScore = this.AIScore + this.AIProgress
-            this.$emit('setTurn', this.AIProgress)
+            this.$emit('setTurn', this.AIProgress, this.AIScore)
         }
     },
     components: {

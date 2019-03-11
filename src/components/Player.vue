@@ -55,10 +55,6 @@ export default {
     watch: {
         playerBug(){
             if (this.playerBug > 100) return this.sanctionPlayer()
-        },
-        
-        playerScore(){
-            if (this.playerScore > 1000) this.$emit('gameover')
         }
         
     },
@@ -69,7 +65,7 @@ export default {
             this.playerBug = this.playerBug + playerNewBug
             this.playerNewBug = playerNewBug
             console.log('PLAYER updated', this.playerScore, this.playerBug)
-            this.$emit('playerTurn', this.playerProgress, this.playerNewBug)
+            this.$emit('playerTurn', this.playerProgress, this.playerNewBug, this.playerScore, this.playerBug)
             console.log('PLAYER emits playerTurn', this.playerProgress, this.playerNewBug)
             //, this.playerNewBug
             //this.saveForDisplay()
@@ -80,9 +76,9 @@ export default {
             console.log('PLAYER - values progress & newBug for display', this.playerProgress, this.playerNewBug)
         },
         setPlayerDebug(){
-            this.playerScore = this.playerScore + this.playerBug
-            this.playerBug = 0
             this.playerProgress = this.playerBug
+            this.playerScore = this.playerScore + this.playerProgress
+            this.playerNewBug = 0
             this.playerBug = 0
             console.log('PLAYER debugging', this.playerScore)
             this.$emit('playerTurn')
