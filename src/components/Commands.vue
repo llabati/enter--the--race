@@ -16,9 +16,8 @@ export default {
     data(){
         return {
             speeds: [ 1, 2, 3, 4, 5 ],
-            playerProgress: 0,
-            choice: 1
-   
+            choice: 1,
+            playerProgress: 0
         }
     },
 

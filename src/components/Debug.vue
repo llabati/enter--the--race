@@ -11,14 +11,13 @@ export default {
 
     data() {
         return {
-            //playerNewBug: 0
+
         }
     },
 
     methods: {
         debug(){
             this.$emit('clearbug')
-
         }
          
     }

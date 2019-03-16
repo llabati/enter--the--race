@@ -15,44 +15,19 @@
                 </v-toolbar>
             </v-flex>
         </v-layout>
+        <results :game="game"></results>
     
-        <div id="charts" style="width: 100%;">
-            <div style="margin-top: 20px; margin-left: 10px;">
-                <v-card color="red" width="30px" height="30px"></v-card><span>Joueur : Bugs</span>
-                <v-card color="green" width="30px" height="30px"></v-card><span>Joueur : Progression</span>
-                <v-card color="yellow" width="30px" height="30px"></v-card><span>IA : Progression</span>
-            </div>
-            <div>
-            <ul class="ul-bar">
-                <li class="li-bar">
-                    
-                    <div >    
-                        <v-card color="red" width="50px" v-bind:style="{ height: '50px'}"></v-card>
-                        <p>{{  }}</p>
-                        <v-card color="green" width="50px" v-bind:style="{ height: '50px'}">Vous</v-card>
-                        <p>{{  }}</p>
-                    </div>
-                    <div> 
-                        <v-card class="ai" color="yellow" width="50px" v-bind:style="{ height: '50px'}">IA</v-card>
-                        <p>{{  }}</p>
-                    </div>
-                    <div style="width: 0;"></div> 
-
-                </li>
-                
-            </ul>
-            </div>        
-        </div>
-        <v-btn class="yellow--text">Une nouvelle partie ?</v-btn>
+        <v-btn class="yellow--text" v-on:click="setNewGame">Une nouvelle partie ?</v-btn>
         <v-layout>
-          <v-btn class="yellow--text large-bottom">Découvrez l'historique de toutes vos parties</v-btn>
+          <v-btn class="yellow--text large-bottom" v-on:click="goToHistory">Découvrez l'historique de toutes vos parties</v-btn>
         </v-layout>
     </v-container>
 </v-app>
 </template>
 
-<script>
+<script> 
 import { store } from '../store/store'
+import Results from './Results.vue'
 
 export default {
     store,
@@ -64,16 +39,19 @@ export default {
     },
     computed: {
         playerGameScore(){
-            return this.$store.getters.getPlayerFinalScore
+            return this.$store.state.playerFinalScore
         },
         AIGameScore(){
-            return this.$store.getters.getAIFinalScore
+            return this.$store.state.AIFinalScore
         },
         winner(){
             return Math.max(this.playerGameScore, this.AIGameScore)
         },
         total(){
             return this.playerGameScore + this.AIGameScore
+        },
+        game() {
+            return this.$store.state.game
         }
         
     },
@@ -85,7 +63,18 @@ export default {
             } else {
                 return this.victory = "C'est la machine qui a gagné "
             }
+        },
+
+        setNewGame: function(){
+            this.$store.commit('resetGame')
+            this.$router.push('/')
+        },
+        goToHistory: function(){
+            this.$router.push('/history')
         }
+    },
+    components: {
+        Results
     }
     
 }

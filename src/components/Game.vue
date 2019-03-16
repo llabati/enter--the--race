@@ -54,9 +54,7 @@ export default {
         }
     },
     watch: {
-        playerUpScore(){
-            if (this.playerUpScore > 1000) return this.closeGame()
-        },
+        
         AIUpScore(){
             if (this.AIUpScore > 1000) return this.closeGame()
         }
@@ -67,31 +65,38 @@ export default {
             console.log('GAME - playerProgress', playerProgress, playerNewBug)
             this.playerProg = playerProgress
             this.playerNewBugs = playerNewBug
-            this.playerUpScore = playerScore
             this.playerUpBug = playerBug
+            this.playerUpScore = playerScore
+            console.log('GAME - playerUpScore', this.playerUpScore)
+            return this.setLaunchAI()
+        },
+        setLaunchAI() {
             this.launchAI = !this.launchAI
+            console.log('AI launched!')
+
         },
         saveTurn(AIProgress, AIScore){
             console.log('GAME - saveTurn', AIProgress, this.playerProg, this.playerNewBugs)
             this.AIProgress = AIProgress
             this.AIUpScore = AIScore
+            this.turn = {}
             this.turn.AIProgress = this.AIProgress
-            //this.playerProgress = playerProgress
             this.turn.playerProgress = this.playerProg
-            //this.playerNewBug = playerNewBug
             this.turn.playerNewBug = this.playerNewBugs
             this.game.push(this.turn)
+            if (this.playerUpScore > 1000) return this.closeGame()
         },
         closeGame(){
+            //this.saveTurn(AIProgress, AIScore)
+            console.log(this.game)
+            this.$store.commit('saveGame', this.game)
             this.$store.commit('addToGames', this.game)
             this.$store.commit('addPlayerScore', this.playerUpScore)
             this.$store.commit('addAIScore', this.AIUpScore)
             console.log('GAME - addScores', this.playerUpScore, this.AIUpScore)
             this.$router.push('/end')
-            //return this.reset()
         },
-        // récupérer les résultats playerScore et AIScore
-        // gérer 'Endgame' avec le booléen et le computed (?????) 'victory'
+
         reset(){
             this.game = []
         }

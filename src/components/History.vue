@@ -22,14 +22,14 @@
           
           <v-container fluid grid-list-sm>
             <v-layout row wrap>
-              <v-flex md12 lg10>
+              <v-flex md12 lg10 v-for="(game, index) in games" :key="game.id" >
                 <v-card color="green" class="white--text" width="100%" height="100%">
-                  <v-card-title>
-                    Partie  - Vous avez gagné cette partie avec  points. Cliquez pour voir l'historique des actions.</v-card-title>
+                  <v-card-title v-on:click="displayGame(index)">
+                    Partie  {{ index + 1 }} - Vous avez gagné cette partie avec {{ playerFinalScore }} points. Cliquez pour voir l'historique des actions.</v-card-title>
                 </v-card> 
                 <v-card color="yellow" class="black--text" width="100%" height="100%">
-                  <v-card-title>
-                    Partie  - Votre adversaire a gagné cette partie avec  points. Cliquez pour voir l'historique des actions.</v-card-title>
+                  <v-card-title v-on:click="displayGame(index)">
+                    Partie  {{ index + 1 }} - Votre adversaire a gagné cette partie avec {{ AIFinalScore }} points. Cliquez pour voir l'historique des actions.</v-card-title>
                 </v-card> 
               </v-flex>
             </v-layout>
@@ -41,6 +41,8 @@
                 <v-card color="green" width="30px" height="30px"></v-card><span>Joueur : Progression</span>
                 <v-card color="yellow" width="30px" height="30px"></v-card><span>IA : Progression</span>
             </div>
+
+            <results></results>
             <div>
             <ul>
                 <li class="li-bar">
@@ -75,6 +77,7 @@
 
 <script>
 import { store } from '../store/store'
+import Results from './Results.vue'
 export default {
     store, 
     name: 'History',
@@ -90,6 +93,9 @@ export default {
     methods: {
         
 
+    },
+    components: {
+        Results
     }
     
 }
