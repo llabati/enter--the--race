@@ -63,10 +63,7 @@ export default {
     methods: {
         upToAI(playerProgress, playerNewBug, playerScore, playerBug){
             console.log('GAME - playerProgress', playerProgress, playerNewBug)
-            this.playerProg = playerProgress
-            this.playerNewBugs = playerNewBug
-            this.playerUpBug = playerBug
-            this.playerUpScore = playerScore
+            this.setupPlayerProgressAndScore(playerProgress, playerNewBug, playerScore, playerBug)
             console.log('GAME - playerUpScore', this.playerUpScore)
             return this.setLaunchAI()
         },
@@ -77,14 +74,27 @@ export default {
         },
         saveTurn(AIProgress, AIScore){
             console.log('GAME - saveTurn', AIProgress, this.playerProg, this.playerNewBugs)
+            this.setupAIProgressAndScore(AIProgress, AIScore)
+            this.setupTurn()
+            this.game.push(this.turn)
+            if (this.playerUpScore > 1000) return this.closeGame()
+        },
+        setupPlayerProgressAndScore(playerProgress, playerNewBug, playerScore, playerBug){
+            console.log('GAME - upToAI - setupPlayer', playerProgress, playerNewBug, playerScore, playerBug)
+            this.playerProg = playerProgress
+            this.playerNewBugs = playerNewBug
+            this.playerUpBug = playerBug
+            this.playerUpScore = playerScore
+        },
+        setupAIProgressAndScore(AIProgress, AIScore){
             this.AIProgress = AIProgress
             this.AIUpScore = AIScore
+        },
+        setupTurn(){
             this.turn = {}
             this.turn.AIProgress = this.AIProgress
             this.turn.playerProgress = this.playerProg
             this.turn.playerNewBug = this.playerNewBugs
-            this.game.push(this.turn)
-            if (this.playerUpScore > 1000) return this.closeGame()
         },
         closeGame(){
             //this.saveTurn(AIProgress, AIScore)

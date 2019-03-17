@@ -65,10 +65,7 @@ export default {
             this.playerBug = this.playerBug + playerNewBug
             this.playerNewBug = playerNewBug
             console.log('PLAYER updated', this.playerScore, this.playerBug)
-            console.log('PLAYER emits playerTurn', this.playerProgress, this.playerNewBug)
             return this.launchPlayerTurn()
-            //, this.playerNewBug
-            //this.saveForDisplay()
         },
         saveForDisplay(){
             this.playerProgress = playerProgress
@@ -85,12 +82,13 @@ export default {
         },
         launchPlayerTurn(){
             this.$emit('playerTurn', this.playerProgress, this.playerNewBug, this.playerScore, this.playerBug)
+            console.log('PLAYER emits playerTurn', this.playerProgress, this.playerNewBug)
         },
         sanctionPlayer() {
             this.playerScore = this.playerScore - (this.playerBug * 2)
             this.playerProgress = 0
             this.playerNewBug = 0
-            this.$emit('playerTurn')
+            this.$emit('playerTurn', this.playerProgress, this.playerNewBug, this.playerScore, this.playerBug)
         }
         
      
