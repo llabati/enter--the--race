@@ -41,7 +41,7 @@
                 <v-card color="yellow" width="30px" height="30px"></v-card><span>IA : Progression</span>
             </div> -->
 
-          <results :game="game" v-if="show"></results>
+          <results :game="game" v-if="game"></results>
 <!--
             <div>
             <ul>
@@ -84,7 +84,6 @@ export default {
     data(){
         return {
             history: 'Voici l\'historique des parties déjà jouées lors de cette session',
-            show: false,
             game: []
             
         }
@@ -102,7 +101,6 @@ export default {
     },
     methods: {
         displayGame: function(index) {
-            this.show = true
             console.log('DISPLAY GAME', index)          
             return this.game = this.$store.state.games[index]
         }
