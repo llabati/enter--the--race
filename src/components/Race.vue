@@ -25,7 +25,7 @@
           </v-flex>
         </v-layout>
         <v-layout>
-          <v-btn class="yellow--text large-bottom">Découvrez l'historique de toutes vos parties</v-btn>
+          <v-btn class="yellow--text large-bottom" v-on:click="$router.push('/history')">Découvrez l'historique de toutes vos parties</v-btn>
         </v-layout>
         </v-container>
        </v-flex>

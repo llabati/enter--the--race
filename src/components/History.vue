@@ -19,15 +19,14 @@
             <v-spacer></v-spacer>
             
           </v-toolbar>
-          
           <v-container fluid grid-list-sm>
             <v-layout row wrap>
               <v-flex md12 lg10 v-for="(game, index) in games" :key="game.id" >
-                <v-card color="green" class="white--text" width="100%" height="100%">
+                <v-card v-if="playerFinalScore > AIFinalScore" color="green" class="white--text" width="100%" height="100%">
                   <v-card-title v-on:click="displayGame(index)">
                     Partie  {{ index + 1 }} - Vous avez gagné cette partie avec {{ playerFinalScore }} points. Cliquez pour voir l'historique des actions.</v-card-title>
                 </v-card> 
-                <v-card color="yellow" class="black--text" width="100%" height="100%">
+                <v-card v-else color="yellow" class="black--text" width="100%" height="100%">
                   <v-card-title v-on:click="displayGame(index)">
                     Partie  {{ index + 1 }} - Votre adversaire a gagné cette partie avec {{ AIFinalScore }} points. Cliquez pour voir l'historique des actions.</v-card-title>
                 </v-card> 
@@ -36,13 +35,14 @@
           </v-container>
     <div id="dis"></div> 
     <div id="charts" style="width: 100%;">
-            <div style="margin-top: 20px; margin-left: 10px;">
+            <!--<div style="margin-top: 20px; margin-left: 10px;">
                 <v-card color="red" width="30px" height="30px"></v-card><span>Joueur : Bugs</span>
                 <v-card color="green" width="30px" height="30px"></v-card><span>Joueur : Progression</span>
                 <v-card color="yellow" width="30px" height="30px"></v-card><span>IA : Progression</span>
-            </div>
+            </div> -->
 
-            <results></results>
+          <results :game="game" v-if="show"></results>
+<!--
             <div>
             <ul>
                 <li class="li-bar">
@@ -62,9 +62,9 @@
                 </li>
                 
             </ul>
-            </div>        
+            </div>     -->   
         </div>
-        <v-btn class="yellow--text">Une nouvelle partie ?</v-btn>
+        <v-btn class="yellow--text" v-on:click="$router.push('/')" >Une nouvelle partie ?</v-btn>
           
         </v-card>
       </v-flex>
@@ -84,15 +84,28 @@ export default {
     data(){
         return {
             history: 'Voici l\'historique des parties déjà jouées lors de cette session',
+            show: false,
+            game: []
             
         }
     },
     computed: {
-        
+        games(){
+            return this.$store.state.games
+        },
+        AIFinalScore(){
+            return this.$store.state.AIFinalScore
+        },
+        playerFinalScore(){
+            return this.$store.state.playerFinalScore
+        },
     },
     methods: {
-        
-
+        displayGame: function(index) {
+            this.show = true
+            console.log('DISPLAY GAME', index)          
+            return this.game = this.$store.state.games[index]
+        }
     },
     components: {
         Results

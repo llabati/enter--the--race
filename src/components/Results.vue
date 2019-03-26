@@ -11,14 +11,14 @@
                 <li class="li-bar" v-for="prog in game" :key="prog.id">
                     
                     <div >    
-                        <v-card color="red" width="50px" v-bind:style="{ height: prog.playerNewBug + 'px'}"></v-card>
-                        <p>{{ prog.playerNewBug }}</p>
-                        <v-card color="green" width="50px" v-bind:style="{ height: prog.playerProgress + 'px'}">Vous</v-card>
-                        <p>{{ prog.playerProgress }}</p>
+                        <v-card color="red" width="50px" v-bind:style="{ height: prog.playerNewBug + 'px'}">{{ prog.playerNewBug }}</v-card>
+                        <p></p>
+                        <v-card color="green" width="50px" v-bind:style="{ height: prog.playerProgress + 'px'}">{{ prog.playerProgress }}</v-card>
+                        <p>Vous</p>
                     </div>
                     <div> 
-                        <v-card class="ai" color="yellow" width="50px" v-bind:style="{ height: prog.AIProgress +'px'}">IA</v-card>
-                        <p>{{ prog.AIProgress }}</p>
+                        <v-card class="ai" color="yellow" width="50px" v-bind:style="{ height: prog.AIProgress +'px'}">{{ prog.AIProgress }}</v-card>
+                        <p>AI</p>
                     </div>
                     <div style="width: 0;"></div> 
 

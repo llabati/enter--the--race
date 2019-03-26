@@ -63,7 +63,7 @@ export default {
     methods: {
         upToAI(playerProgress, playerNewBug, playerScore, playerBug){
             console.log('GAME - playerProgress', playerProgress, playerNewBug)
-            this.setupPlayerProgressAndScore(playerProgress, playerNewBug, playerScore, playerBug)
+            this.setupPlayer(playerProgress, playerNewBug, playerScore, playerBug)
             console.log('GAME - playerUpScore', this.playerUpScore)
             return this.setLaunchAI()
         },
@@ -74,19 +74,19 @@ export default {
         },
         saveTurn(AIProgress, AIScore){
             console.log('GAME - saveTurn', AIProgress, this.playerProg, this.playerNewBugs)
-            this.setupAIProgressAndScore(AIProgress, AIScore)
+            this.setupAI(AIProgress, AIScore)
             this.setupTurn()
             this.game.push(this.turn)
             if (this.playerUpScore > 1000) return this.closeGame()
         },
-        setupPlayerProgressAndScore(playerProgress, playerNewBug, playerScore, playerBug){
+        setupPlayer(playerProgress, playerNewBug, playerScore, playerBug){
             console.log('GAME - upToAI - setupPlayer', playerProgress, playerNewBug, playerScore, playerBug)
             this.playerProg = playerProgress
             this.playerNewBugs = playerNewBug
             this.playerUpBug = playerBug
             this.playerUpScore = playerScore
         },
-        setupAIProgressAndScore(AIProgress, AIScore){
+        setupAI(AIProgress, AIScore){
             this.AIProgress = AIProgress
             this.AIUpScore = AIScore
         },
@@ -97,7 +97,6 @@ export default {
             this.turn.playerNewBug = this.playerNewBugs
         },
         closeGame(){
-            //this.saveTurn(AIProgress, AIScore)
             console.log(this.game)
             this.$store.commit('saveGame', this.game)
             this.$store.commit('addToGames', this.game)
