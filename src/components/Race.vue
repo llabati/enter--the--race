@@ -17,16 +17,15 @@
         <v-container fluid grid-list-lg>
           <v-layout row wrap>
             <v-flex sm10 xl10>
-              <explanation>Codez le plus vite possible, en limitant les risques de bug. 
-              Plus vous allez vite, plus vous risquez de vous engluer dans les bugs. 
-              Et pendant ce temps, l'Intelligence Artificielle progresse, et, elle, ne fait pas de bugs...</explanation>
+              <explanation>C'est une course entre vous et la machine : en codant plus vite qu'elle, vous prenez le risque de faire de nombreux bugs, et d'être pénalisé. En réglant votre vitesse à chaque coup, trouvez la bonne stratégie pour faire mieux qu'elle. 
+              A chaque tour, la machine progresse, et, elle, ne fait pas de bugs...</explanation>
         
               <game></game>
           </v-flex>
         </v-layout>
         <v-layout>
           <v-btn class="yellow--text large-bottom" v-on:click="$router.push('/history')">Découvrez l'historique de toutes vos parties</v-btn>
-        </v-layout>
+        </v-layout>  
         </v-container>
        </v-flex>
     </v-layout>
@@ -59,14 +58,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.bottom-btn {
+/*.bottom-btn {
   margin: -200px 35% 10px 35%;
 
-}
+} */
 .large-bottom {
-  margin: -400px 20% 0px 25%;
-  padding: 30px 30px 30px 30px;
+  margin: -200px 20% 0px 25%;
+  padding: 10px 30px 30px 30px;
 
-}
+}  
 
 </style>

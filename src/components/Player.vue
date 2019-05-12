@@ -5,8 +5,11 @@
                 <h2>Vous</h2>
             </v-card-title>
         </v-card>
+        
+        <v-card-title><br></v-card-title>
         <IEcharts :option="gauge" style="width: 400px; height: 300px;"></IEcharts>
         <IEcharts :option="bugs" style="width: 300px; height: 250px;"></IEcharts> 
+        
         <v-card>
             <v-card-text light>
                 <span>Votre score : <strong>{{ playerScore }}</strong></span>
@@ -18,17 +21,18 @@
                 <span>Nouveaux bugs : <strong>{{ playerNewBug }}</strong></span>
             </v-card-text>
         </v-card>
-
+        <div id="buttons">
         <commands style="margin-bottom: 25px;" v-on:youprog="setPlayerScore">Vous choisissez la vitesse de production de votre code, 
         mais attention : plus vous codez vite, plus le risque de produire des bugs augmente...</commands>
-        <debug style="margin-left: 30px;" v-on:clearbug="setPlayerDebug">Si vos bugs montent à plus de 100, ils seront décomptés de votre score. 
+        <debug style="display: inline-block; margin-left: 30px;" v-on:clearbug="setPlayerDebug">Si vos bugs montent à plus de 100, ils seront décomptés de votre score. 
         Vous pouvez les éliminer en cliquant ici, mais attention ! Vous passez votre tour...</debug>
-
+        </div>
     </div>  
 </template>
 
 <script>
-
+// responsabilité du composant : mettre à jour les données du joueur humain
+// et afficher les résultats
 import Vuex from 'vuex'
 import { store } from '../store/store'
 import Commands from './Commands.vue'
@@ -196,8 +200,19 @@ export default {
 </script>
 
 <style>
+v-card {
+    margin: 5px;
+}
     strong {
         color: yellow;
+    }
+
+    #buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
     }
 </style>
 

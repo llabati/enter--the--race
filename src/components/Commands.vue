@@ -1,7 +1,7 @@
 <template>
-<div>
+<div id="commands">
     <select name="speeds" id="speeds">
-            <option v-for="speed in speeds" :key="speed.id">{{ speed }}</option>
+            <option class="choice" v-for="speed in speeds" :key="speed.id">{{ speed }}</option>
     </select>
     <v-btn round color="yellow" class="black--text" v-on:click="getPlayerChoice">Jouer</v-btn>
 </div>
@@ -41,14 +41,21 @@ export default {
 </script>
 
 <style>
+#commands {
+    width: 50%;
+}
     #speeds {
-        width: 50%;
-        height: 40px;
-        background-color: '#EEE';
-        padding-left: 30px;
+        margin-top: 10px;
+        width: 20%;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        /*padding-left: 30px;*/
         font-size: 20px;
         line-height: 1.4;
-        color: '#AAAA00';
+        font-size: 20px;
+        text-align: center;
         box-shadow: 1px 1px 1px 1px;
     }
+
 </style>

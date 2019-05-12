@@ -5,6 +5,8 @@
                 <h2>La machine</h2>
             </v-card-title>
         </v-card>
+                
+        <v-card-title><br></v-card-title>
         <IEcharts id="gauge" :option="gauge" style="width: 400px; height: 300px; margin-bottom: 100px;" ></IEcharts> 
         <v-card>
             <v-card-text light>
@@ -26,6 +28,7 @@
 </template>
 
 <script>
+// responsabilité du composant : faire progresser les résultats de l'AI et afficher les scores
 import { store } from '../store/store'
 import IEcharts from 'vue-echarts-v3/src/full.js'
 export default {
@@ -87,7 +90,7 @@ export default {
         setAIScore(){
             this.AIProgress = Math.floor(Math.random() * 250)
             console.log('AI', this.AIProgress)
-            this.AIScore = this.AIScore + this.AIProgress
+            this.setMove(this.AIScore, this.AIProgress)
             this.displayUpdates(this.AIScore)
             return this.launchTurn()
         },
@@ -96,6 +99,9 @@ export default {
         },
         launchTurn(){
             this.$emit('setTurn', this.AIProgress, this.AIScore)
+        },
+        setMove(AIScore, AIProgress){
+            return this.AIScore = this.AIScore + this.AIProgress
         }
     },
     components: {

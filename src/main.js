@@ -12,6 +12,13 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+
+var setMove = {
+  methods: {
+    score: (a, b) => a = a + b
+  }
+}
+
 new Vue({
   el: '#race',
   router,

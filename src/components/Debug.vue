@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="debug">
         <v-btn round color="red" class="white--text" v-on:click="debug">Déboguer</v-btn>
         
     </div>
@@ -23,3 +23,9 @@ export default {
     }
 }
 </script>
+
+<style>
+    #debug {
+        margin-left: 0;
+    }
+</style>

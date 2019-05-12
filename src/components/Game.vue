@@ -6,10 +6,10 @@
                     
                     <player v-on:playerTurn="upToAI" v-on:gameover="closeGame(true)"></player>
                 </v-flex>
-                <v-divider vertical light warning></v-divider>
+                <!--<v-divider vertical light warning></v-divider>
                 <v-flex md2 lg2>
                 </v-flex>
-                <v-divider vertical light warning></v-divider>
+                <v-divider vertical light warning></v-divider>-->
                 <v-flex md5 lg5>
                     
                     <AI :launchAI = "launchAI" v-on:setTurn="saveTurn" v-on:gameover="closeGame(false)">
@@ -18,19 +18,18 @@
                             A l'inverse, la vitesse 5 vous permettra d'aller vite... mais vous risquez de faire de nombreux bugs.
                         </template>
                             
-                        Vous pouvez convertir vos bugs en points de progression, en cliquant sur DEBOGUER. 
-                        Attention : si vos bugs atteignent 100, ils seront soustraits de votre progression. Déboguez avant que vos bugs ne vous pénalisent !
-                        
+                        Attention : si vos bugs atteignent 100, ils seront soustraits de votre progression. Pour éviter d'être pénalisé, cliquez sur DEBOGUER : vous convertirez alors vos bugs en points de progression.
                     </AI>
                 </v-flex>
             </v-layout>
-            <exit></exit>
+            <!--<exit></exit>  -->
         </v-container>
     </v-app>
 </template>
 
 <script>
-
+// responsabilité du composant : récupérer les progressions des deux composants Player et AI. 
+// transmettre les données finales au store
 import Player from './Player.vue'
 import AI from './AI.vue'
 import Exit from './Exit.vue'
@@ -114,7 +113,7 @@ export default {
     components: {
         Player,
         AI,
-        Exit
+        //Exit
     }
     
 }
